@@ -24,7 +24,9 @@ References:
 
 2. [Double-DQN Paper](https://arxiv.org/abs/1509.06461)
 
-3. ![Algorithm][image1]
+3. Algorithm details: 
+
+![Algorithm][image1]
 
 
 4. Short explanation (refer to the papers for further details):
