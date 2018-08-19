@@ -2,7 +2,7 @@
 
 [image1]: https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif "Trained Agent"
 
-# Project 1: Navigation
+# Deep RL Project: Navigation
 
 ### Introduction
 
@@ -19,7 +19,7 @@ The state space has 37 dimensions and contains the agent's velocity, along with 
 - **`3`** - turn right.
 
 The task is episodic, and in order to solve the environment, our agent must get an average score of +13 over 100 consecutive episodes.
-The agent trained with the code provided in this repository, solves the environment in 346 episodes, and achieves a maximum average score of 17.79 after ~1400 episodes. 
+The agent trained with the code provided in this repository, solves the environment in ~350 episodes, and achieves a maximum average score of above 17 after ~1200 episodes. 
 
 ### Getting Started
 
@@ -39,16 +39,16 @@ To set up your python environment to run the code in this repository, follow the
     ```
     
 2. Clone the repository (if you haven't already!), and navigate to the `python/` folder.  Then, install several dependencies.
-```bash
-git clone https://github.com/udacity/deep-reinforcement-learning.git
-cd deep-reinforcement-learning/python
-pip install .
-```
+    ```bash
+    git clone https://github.com/udacity/deep-reinforcement-learning.git
+    cd deep-reinforcement-learning/python
+    pip install .
+    ```
 
 3. Create an [IPython kernel](http://ipython.readthedocs.io/en/stable/install/kernel_install.html) for the `drlnd` environment.  
-```bash
-python -m ipykernel install --user --name drlnd --display-name "drlnd"
-```
+    ```bash
+    python -m ipykernel install --user --name drlnd --display-name "drlnd"
+    ```
 
 4. Before running code in a notebook, change the kernel to match the `drlnd` environment by using the drop-down `Kernel` menu. 
 
