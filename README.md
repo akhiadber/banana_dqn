@@ -69,5 +69,5 @@ To set up your python environment to run the code in this repository, follow the
 
 ### Instructions
 
-Follow the instructions in `Navigation.ipynb` to see the training and performance of the trained agent. 
+Follow the instructions in `Navigation.ipynb` to see the training and performance of the trained agent. Best pre-trained weights are saved in file 'checkpoint_final.pth'.
 

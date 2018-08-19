@@ -1,7 +1,7 @@
 [//]: # (Image References)
 
 [image1]: https://user-images.githubusercontent.com/15965062/44311825-11761100-a3f7-11e8-8412-5d14ee230bf7.png "Algorithm"
-[image2]: https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif "Plot of Rewards"
+[image2]: https://user-images.githubusercontent.com/15965062/44312723-1c37a280-a405-11e8-8671-b811fc21d687.png "Plot of Rewards"
 
 # Report - Deep RL Project: Navigation
 
@@ -40,7 +40,7 @@ References:
     TAU = 1e-3              # for soft update of target parameters
     LR = 5e-4               # learning rate 
     UPDATE_EVERY = 4        # how often to update the network
-    n_episodes = 1300       # max number of episodes for the training loop
+    n_episodes = 1400       # max number of episodes for the training loop
     max_t = 1000            # max steps in every episode 
     eps_start=1.0           # starting value of epsilon
     eps_end=0.01            # final value of epsilon
@@ -50,6 +50,7 @@ References:
 6. Network architecture:
     - Fully connected network, with 2 hidden layers of 64 units each and Relu activation function.
     - Input and output layers sizes determined by the state and action space, respectively.
+    - Training time until solving the environment (~350 episodes) takes less than 5 minutes on AWS p2 instance with GPU.
     - See 'model.py' for more details.
 
 ### Plot of results
