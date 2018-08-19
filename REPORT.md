@@ -1,55 +1,69 @@
 [//]: # (Image References)
 
-[image1]: https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif "Trained Agent"
+[image1]: https://user-images.githubusercontent.com/15965062/44311825-11761100-a3f7-11e8-8412-5d14ee230bf7.png "Algorithm"
+[image2]: https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif "Plot of Rewards"
 
-# Project 1: Navigation
+# Report - Deep RL Project: Navigation
 
-### Introduction
+### Implementation Details
 
-For this project, you will train an agent to navigate (and collect bananas!) in a large, square world.  
+The code for this project is ordered in 2 python files, 'dqn_agent.py' and 'model.py', and the main training code and instructions in the notebook 'Navigation.ipynb'. 
 
-![Trained Agent][image1]
+1. 'model.py': Architecture and logic for a neural network implementing the state to action values from which the maximum action value is chosen for the DQN algorithm.
 
-A reward of +1 is provided for collecting a yellow banana, and a reward of -1 is provided for collecting a blue banana.  Thus, the goal of your agent is to collect as many yellow bananas as possible while avoiding blue bananas.  
+2. 'dqn_agent.py': Implements the agent class, which includes the logic for the stepping, acting, learning and the buffer to hold the experience data on which to train the agent, and uses 'model.py' to generate the local and target networks.
 
-The state space has 37 dimensions and contains the agent's velocity, along with ray-based perception of objects around agent's forward direction.  Given this information, the agent has to learn how to best select actions.  Four discrete actions are available, corresponding to:
-- **`0`** - move forward.
-- **`1`** - move backward.
-- **`2`** - turn left.
-- **`3`** - turn right.
+3. 'Navigation.ipynb': Main training logic and usage instructions. Includes explainations about the environment, state and action space, goals and final results. The main training loop creates an agent and trains it using the double-DQN algorithm (details below) until satisfactory results. 
 
-The task is episodic, and in order to solve the environment, your agent must get an average score of +13 over 100 consecutive episodes.
+### Learning Algorithm
 
-### Getting Started
+The agent is trained using the double-DQN algorithm.
 
-1. Download the environment from one of the links below.  You need only select the environment that matches your operating system:
-    - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux.zip)
-    - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana.app.zip)
-    - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86.zip)
-    - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86_64.zip)
+References:
+1. [DQN Paper](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf)
+
+2. [Double-DQN Paper](https://arxiv.org/abs/1509.06461)
+
+3. ![Algorithm][image1]
+
+
+4. Short explanation (refer to the papers for further details):
+    - DQN: Adding experience replay (to decorrelate the experiences) and fixed target network (using second network that is updated slower then the main neural network) to the original Q learning algorithm.
+
+    - Double-DQN: Using a different network to choose the argmax action from above algorithm (and since we have the fixed target network, we just use that). This is used to somewhat fix the problem of overestimation of Q values in the original DQN algoritm.
     
-    (_For Windows users_) Check out [this link](https://support.microsoft.com/en-us/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64) if you need help with determining if your computer is running a 32-bit version or 64-bit version of the Windows operating system.
+5. Hyperparameters used:
+    ```
+    BUFFER_SIZE = int(1e5)  # replay buffer size
+    BATCH_SIZE = 64         # minibatch size
+    GAMMA = 0.99            # discount factor
+    TAU = 1e-3              # for soft update of target parameters
+    LR = 5e-4               # learning rate 
+    UPDATE_EVERY = 4        # how often to update the network
+    n_episodes = 1300       # max number of episodes for the training loop
+    max_t = 1000            # max steps in every episode 
+    eps_start=1.0           # starting value of epsilon
+    eps_end=0.01            # final value of epsilon
+    eps_decay=0.995          # decay rate for epsilon
+    ```
 
-    (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux_NoVis.zip) to obtain the environment.
+6. Network architecture:
+    - Fully connected network, with 2 hidden layers of 64 units each and Relu activation function.
+    - Input and output layers sizes determined by the state and action space, respectively.
+    - See 'model.py' for more details.
 
-2. Place the file in the DRLND GitHub repository, in the `p1_navigation/` folder, and unzip (or decompress) the file. 
+### Plot of results
 
-### Instructions
+As seen below, the agent solves the environment after ~350 episodes, and achieves best average score of above 17.
 
-Follow the instructions in `Navigation.ipynb` to get started with training your own agent!  
+![Plot of Rewards][image2]
 
-### (Optional) Challenge: Learning from Pixels
+###  Ideas for future work
 
-After you have successfully completed the project, if you're looking for an additional challenge, you have come to the right place!  In the project, your agent learned from information such as its velocity, along with ray-based perception of objects around its forward direction.  A more challenging task would be to learn directly from pixels!
+1. Learning from Pixels:
+    - Learning from pixels instead of the given states will require a different network architecture (CNN based) and additional training time.
+    - Aside from above, the code implemented here is almost ready for this challange, will only need to change the state space and load the AWS environment with X server (the provided env for Linux depends on X server).
 
-To solve this harder task, you'll need to download a new Unity environment.  This environment is almost identical to the project environment, where the only difference is that the state is an 84 x 84 RGB image, corresponding to the agent's first-person view.  (**Note**: Udacity students should not submit a project with this new environment.)
-
-You need only select the environment that matches your operating system:
-- Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/VisualBanana_Linux.zip)
-- Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/VisualBanana.app.zip)
-- Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/VisualBanana_Windows_x86.zip)
-- Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/VisualBanana_Windows_x86_64.zip)
-
-Then, place the file in the `p1_navigation/` folder in the DRLND GitHub repository, and unzip (or decompress) the file.  Next, open `Navigation_Pixels.ipynb` and follow the instructions to learn how to use the Python API to control the agent.
-
-(_For AWS_) If you'd like to train the agent on AWS, you must follow the instructions to [set up X Server](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md), and then download the environment for the **Linux** operating system above.
+2. Rainbow:
+    - Several improvements to the DQN algorithm (in addition to Double-DQN) have risen over the years.
+    - The [Rainbow paper](https://arxiv.org/abs/1710.02298) combines these ideas, adding some or all of them to this repo would be nice. 
